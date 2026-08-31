@@ -6,33 +6,33 @@ Phase 01 validates the complete camera and ROS 2 foundation for the project.
 
 The two cameras tested are:
 
-\- Stereolabs ZED 2
+- Stereolabs ZED 2
 
-\- Intel RealSense D435i
+- Intel RealSense D435i
 
 Both cameras are validated before starting the actual perception pipeline.
 
 The goal is to verify:
 
-\- Camera hardware
+- Camera hardware
 
-\- USB connectivity
+- USB connectivity
 
-\- Camera SDK
+- Camera SDK
 
-\- ROS 2 integration
+- ROS 2 integration
 
-\- RGB streams
+- RGB streams
 
-\- Depth streams
+- Depth streams
 
-\- 3D PointCloud
+- 3D PointCloud
 
-\- IMU
+- IMU
 
-\- TF / Extrinsics
+- TF / Extrinsics
 
-\- Camera stability
+- Camera stability
 
 After this phase, the project can continue with 2D perception, 3D perception, AI object detection, segmentation, robot manipulation, dataset recording and imitation learning.
 
@@ -42,79 +42,79 @@ After this phase, the project can continue with 2D perception, 3D perception, AI
 
 Main project:
 
-\`\`\`text
+```text
 
-/home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning
+/home/sarvg/projects/robotics/ros2_perception_imitation_learning
 
-\`\`\`
+```
 
 Phase 01:
 
-\`\`\`text
+```text
 
-/home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2
+/home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2
 
-\`\`\`
+```
 
 Structure:
 
-\`\`\`text
+```text
 
-phase\_01\_camera\_ros2/
+phase_01_camera_ros2/
 
 ├── zed2/
 
-│   └── ros2\_ws/
+│   └── ros2_ws/
 
-└── realsense\_d435i/
+└── realsense_d435i/
 
-\`\`\`
+```
 
 Complete project structure:
 
-\`\`\`text
+```text
 
-ros2\_perception\_imitation\_learning/
+ros2_perception_imitation_learning/
 
-├── phase\_01\_camera\_ros2/
+├── phase_01_camera_ros2/
 
 │   ├── zed2/
 
-│   └── realsense\_d435i/
+│   └── realsense_d435i/
 
-├── phase\_02\_2d\_perception/
+├── phase_02_2d_perception/
 
-├── phase\_03\_3d\_perception/
+├── phase_03_3d_perception/
 
-├── phase\_04\_tf2\_calibration/
+├── phase_04_tf2_calibration/
 
-├── phase\_05\_ai\_object\_detection/
+├── phase_05_ai_object_detection/
 
-├── phase\_06\_segmentation/
+├── phase_06_segmentation/
 
-├── phase\_07\_isaac\_ros/
+├── phase_07_isaac_ros/
 
-├── phase\_08\_foundationpose/
+├── phase_08_foundationpose/
 
-├── phase\_09\_robot\_manipulation/
+├── phase_09_robot_manipulation/
 
-├── phase\_10\_dataset\_recording/
+├── phase_10_dataset_recording/
 
-├── phase\_11\_pytorch\_imitation\_learning/
+├── phase_11_pytorch_imitation_learning/
 
-├── phase\_12\_policy\_robot/
+├── phase_12_policy_robot/
 
-├── phase\_13\_isaac\_lab\_mimic/
+├── phase_13_isaac_lab_mimic/
 
-└── phase\_14\_groot\_sim\_to\_real/
+└── phase_14_groot_sim_to_real/
 
-\`\`\`
+```
 
 **---**
 
 **# 2. Overall Architecture**
 
-\`\`\`text
+```text
 
                      CAMERA LAYER
 
@@ -132,7 +132,7 @@ ros2\_perception\_imitation\_learning/
 
              │                         │
 
-    zed-ros2-wrapper          realsense2\_camera
+    zed-ros2-wrapper          realsense2_camera
 
              │                         │
 
@@ -212,7 +212,7 @@ ros2\_perception\_imitation\_learning/
 
                    GR00T / Sim-to-Real
 
-\`\`\`
+```
 
 **---**
 
@@ -222,7 +222,7 @@ ros2\_perception\_imitation\_learning/
 
 Main role:
 
-\`\`\`text
+```text
 
 ZED 2
 
@@ -246,31 +246,31 @@ AI Perception
 
 TurtleBot3 / mobile perception
 
-\`\`\`
+```
 
 The ZED 2 is the primary perception-development camera.
 
 Important capabilities:
 
-\- Stereo vision
+- Stereo vision
 
-\- RGB
+- RGB
 
-\- Depth
+- Depth
 
-\- PointCloud
+- PointCloud
 
-\- IMU
+- IMU
 
-\- Positional tracking
+- Positional tracking
 
-\- Odometry
+- Odometry
 
-\- AI models
+- AI models
 
-\- NVIDIA GPU acceleration
+- NVIDIA GPU acceleration
 
-\- NITROS support
+- NITROS support
 
 **---**
 
@@ -278,7 +278,7 @@ Important capabilities:
 
 Main role:
 
-\`\`\`text
+```text
 
 D435i
 
@@ -306,27 +306,27 @@ Dataset Recording
 
 Imitation Learning
 
-\`\`\`
+```
 
 The D435i is particularly useful for the manipulator because it is considerably smaller and lighter than the ZED 2.
 
 Important capabilities:
 
-\- RGB
+- RGB
 
-\- Stereo Depth
+- Stereo Depth
 
-\- Infrared
+- Infrared
 
-\- PointCloud
+- PointCloud
 
-\- Gyroscope
+- Gyroscope
 
-\- Accelerometer
+- Accelerometer
 
-\- Depth-to-Color alignment
+- Depth-to-Color alignment
 
-\- Compact form factor
+- Compact form factor
 
 The exact final camera/robot assignment can still evolve in later phases.
 
@@ -336,7 +336,7 @@ The exact final camera/robot assignment can still evolve in later phases.
 
 Development system used for this phase:
 
-\`\`\`text
+```text
 
 OS:
 
@@ -352,7 +352,7 @@ NVIDIA GeForce RTX 5090 Laptop GPU
 
 VRAM:
 
-\~24 GB
+~24 GB
 
 NVIDIA Driver:
 
@@ -362,11 +362,11 @@ CUDA Driver:
 
 13.2
 
-\`\`\`
+```
 
 General software requirements:
 
-\`\`\`text
+```text
 
 ROS 2 Jazzy
 
@@ -384,7 +384,7 @@ NVIDIA Driver
 
 CUDA
 
-\`\`\`
+```
 
 **---**
 
@@ -392,7 +392,7 @@ CUDA
 
 Validated environment:
 
-\`\`\`text
+```text
 
 Camera:
 
@@ -422,15 +422,15 @@ Connection:
 
 USB 3.x SuperSpeed
 
-\`\`\`
+```
 
 Repository:
 
-\`\`\`text
+```text
 
-https\://github.com/stereolabs/zed-ros2-wrapper
+https://github.com/stereolabs/zed-ros2-wrapper
 
-\`\`\`
+```
 
 **---**
 
@@ -495,45 +495,45 @@ ZED SDK 5.4.1
 
 Directory:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/zed2
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2
 
-\`\`\`
+```
 
 Check USB:
 
-\`\`\`bash
+```bash
 
 lsusb | grep -i -E 'stereo|zed|2b03'
 
-\`\`\`
+```
 
 Detected devices:
 
-\`\`\`text
+```text
 
 STEREOLABS ZED 2
 
 STEREOLABS ZED-2 HID INTERFACE
 
-\`\`\`
+```
 
 Check USB topology:
 
-\`\`\`bash
+```bash
 
 lsusb -t
 
-\`\`\`
+```
 
 The main ZED 2 video interface was detected at:
 
-\`\`\`text
+```text
 
 5000M
 
-\`\`\`
+```
 
 This confirms SuperSpeed operation.
 
@@ -543,9 +543,9 @@ The ZED HID/IMU interface appears separately on the USB 2.x tree.
 
 **# 7. ROS 2 Validation**
 
-\`\`\`bash
+```bash
 
-echo "ROS\_DISTRO=$ROS\_DISTRO"
+echo "ROS_DISTRO=$ROS_DISTRO"
 
 which ros2
 
@@ -555,19 +555,19 @@ echo "ROS 2: OK" || \\
 
 echo "ROS 2: NOT FOUND"
 
-\`\`\`
+```
 
 Result:
 
-\`\`\`text
+```text
 
-ROS\_DISTRO=jazzy
+ROS_DISTRO=jazzy
 
 /opt/ros/jazzy/bin/ros2
 
 ROS 2: OK
 
-\`\`\`
+```
 
 **---**
 
@@ -575,53 +575,53 @@ ROS 2: OK
 
 Check SDK installation:
 
-\`\`\`bash
+```bash
 
 ls -ld /usr/local/zed
 
-\`\`\`
+```
 
 Result:
 
-\`\`\`text
+```text
 
 /usr/local/zed
 
-\`\`\`
+```
 
 Installed ZED tools included:
 
-\`\`\`text
+```text
 
 ZED360
 
-ZED\_Calibration
+ZED_Calibration
 
-ZED\_Depth\_Viewer
+ZED_Depth_Viewer
 
-ZED\_Diagnostic
+ZED_Diagnostic
 
-ZED\_Explorer
+ZED_Explorer
 
-ZED\_Sensor\_Placer
+ZED_Sensor_Placer
 
-ZED\_Sensor\_Viewer
+ZED_Sensor_Viewer
 
-ZED\_Studio
+ZED_Studio
 
-ZED\_SVO\_Editor
+ZED_SVO_Editor
 
 ZEDfu
 
-\`\`\`
+```
 
 ZED SDK version:
 
-\`\`\`text
+```text
 
 5.4.1
 
-\`\`\`
+```
 
 **---**
 
@@ -629,7 +629,7 @@ ZED SDK version:
 
 ZED Diagnostic confirmed:
 
-\`\`\`text
+```text
 
 Camera:
 
@@ -653,17 +653,17 @@ Compute Capability:
 
 GPU Memory:
 
-\~24 GB
+~24 GB
 
 ZED SDK:
 
 5.4.1
 
-\`\`\`
+```
 
 Available ZED AI models included:
 
-\`\`\`text
+```text
 
 MULTI CLASS DETECTION
 
@@ -695,7 +695,7 @@ NEURAL DEPTH
 
 NEURAL PLUS DEPTH
 
-\`\`\`
+```
 
 These models can become relevant during later AI perception phases.
 
@@ -705,51 +705,51 @@ These models can become relevant during later AI perception phases.
 
 Create workspace:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/zed2
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2
 
-mkdir -p ros2\_ws/src
+mkdir -p ros2_ws/src
 
-cd ros2\_ws/src
+cd ros2_ws/src
 
-\`\`\`
+```
 
 Clone wrapper:
 
-\`\`\`bash
+```bash
 
-git clone https\://github.com/stereolabs/zed-ros2-wrapper.git
+git clone https://github.com/stereolabs/zed-ros2-wrapper.git
 
-\`\`\`
+```
 
 Install dependencies:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/zed2/ros2\_ws
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 
 rosdep install \\
 
-  \--from-paths src \\
+  --from-paths src \\
 
-  \--ignore-src \\
+  --ignore-src \\
 
   -r \\
 
   -y
 
-\`\`\`
+```
 
 Result:
 
-\`\`\`text
+```text
 
 All required rosdeps installed successfully
 
-\`\`\`
+```
 
 **---**
 
@@ -818,43 +818,43 @@ Only `src/` and project-authored source/configuration files belong in Git.
 
 **# 11. Build ZED ROS 2 Wrapper**
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/zed2/ros2\_ws
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 
 colcon build \\
 
-  \--symlink-install \\
+  --symlink-install \\
 
-  \--cmake-args=-DCMAKE\_BUILD\_TYPE=Release \\
+  --cmake-args=-DCMAKE_BUILD_TYPE=Release \\
 
-  \--parallel-workers $(nproc)
+  --parallel-workers $(nproc)
 
-\`\`\`
+```
 
 Build result:
 
-\`\`\`text
+```text
 
-zed\_components    PASS
+zed_components    PASS
 
-zed\_wrapper       PASS
+zed_wrapper       PASS
 
-zed\_debug         PASS
+zed_debug         PASS
 
-zed\_ros2          PASS
+zed_ros2          PASS
 
-\`\`\`
+```
 
 Final build:
 
-\`\`\`text
+```text
 
 Summary: 4 packages finished
 
-\`\`\`
+```
 
 NITROS support was detected during the build.
 
@@ -864,25 +864,25 @@ NITROS support was detected during the build.
 
 Terminal 1:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/zed2/ros2\_ws
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 
 source install/setup.bash
 
-ros2 launch zed\_wrapper zed\_camera.launch.py camera\_model:=zed2
+ros2 launch zed_wrapper zed_camera.launch.py camera_model:=zed2
 
-\`\`\`
+```
 
 Successful startup:
 
-\`\`\`text
+```text
 
-\=== zed started ===
+=== zed started ===
 
-\`\`\`
+```
 
 **---**
 
@@ -890,9 +890,9 @@ Successful startup:
 
 Terminal 2:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/zed2/ros2\_ws
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 
@@ -918,7 +918,7 @@ echo
 
 echo "=== POINT CLOUD TOPICS ==="
 
-ros2 topic list | grep -E 'point\_cloud|pointcloud'
+ros2 topic list | grep -E 'point_cloud|pointcloud'
 
 echo
 
@@ -926,37 +926,37 @@ echo "=== IMU TOPICS ==="
 
 ros2 topic list | grep imu
 
-\`\`\`
+```
 
 Important validated topics:
 
-\`\`\`text
+```text
 
-/zed/zed\_node/rgb/color/rect/image
+/zed/zed_node/rgb/color/rect/image
 
-/zed/zed\_node/depth/depth\_registered
+/zed/zed_node/depth/depth_registered
 
-/zed/zed\_node/point\_cloud/cloud\_registered
+/zed/zed_node/point_cloud/cloud_registered
 
-/zed/zed\_node/imu/data
+/zed/zed_node/imu/data
 
-/zed/zed\_node/odom
+/zed/zed_node/odom
 
-/zed/zed\_node/pose
+/zed/zed_node/pose
 
-/zed/zed\_node/pose/status
+/zed/zed_node/pose/status
 
-\`\`\`
+```
 
 NITROS topics:
 
-\`\`\`text
+```text
 
-/zed/zed\_node/rgb/color/rect/image/nitros
+/zed/zed_node/rgb/color/rect/image/nitros
 
-/zed/zed\_node/depth/depth\_registered/nitros
+/zed/zed_node/depth/depth_registered/nitros
 
-\`\`\`
+```
 
 **---**
 
@@ -964,9 +964,9 @@ NITROS topics:
 
 Terminal 2:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/zed2/ros2\_ws
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 
@@ -974,47 +974,47 @@ source install/setup.bash
 
 echo "=== RGB RATE ==="
 
-timeout 6 ros2 topic hz /zed/zed\_node/rgb/color/rect/image
+timeout 6 ros2 topic hz /zed/zed_node/rgb/color/rect/image
 
 echo
 
 echo "=== DEPTH RATE ==="
 
-timeout 6 ros2 topic hz /zed/zed\_node/depth/depth\_registered
+timeout 6 ros2 topic hz /zed/zed_node/depth/depth_registered
 
 echo
 
 echo "=== POINT CLOUD RATE ==="
 
-timeout 6 ros2 topic hz /zed/zed\_node/point\_cloud/cloud\_registered
+timeout 6 ros2 topic hz /zed/zed_node/point_cloud/cloud_registered
 
 echo
 
 echo "=== IMU RATE ==="
 
-timeout 6 ros2 topic hz /zed/zed\_node/imu/data
+timeout 6 ros2 topic hz /zed/zed_node/imu/data
 
-\`\`\`
+```
 
 Measured values:
 
-\`\`\`text
+```text
 
 RGB:
 
-\~25–27 Hz
+~25–27 Hz
 
 PointCloud:
 
-\~10 Hz
+~10 Hz
 
 IMU:
 
-\~99 Hz
+~99 Hz
 
-\`\`\`
+```
 
-The initial \`ros2 topic hz\` command did not display a value for the Depth stream, so Depth was validated separately.
+The initial `ros2 topic hz` command did not display a value for the Depth stream, so Depth was validated separately.
 
 **---**
 
@@ -1022,9 +1022,9 @@ The initial \`ros2 topic hz\` command did not display a value for the Depth stre
 
 Check publisher:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/zed2/ros2\_ws
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 
@@ -1032,19 +1032,19 @@ source install/setup.bash
 
 ros2 topic info \\
 
-  /zed/zed\_node/depth/depth\_registered \\
+  /zed/zed_node/depth/depth_registered \\
 
-  \--verbose
+  --verbose
 
-\`\`\`
+```
 
 Result:
 
-\`\`\`text
+```text
 
 Type:
 
-sensor\_msgs/msg/Image
+sensor_msgs/msg/Image
 
 Publisher count:
 
@@ -1056,35 +1056,35 @@ RELIABLE
 
 History:
 
-KEEP\_LAST (10)
+KEEP_LAST (10)
 
 Durability:
 
 VOLATILE
 
-\`\`\`
+```
 
 Validate actual depth message:
 
-\`\`\`bash
+```bash
 
 timeout 10 ros2 topic echo \\
 
-  /zed/zed\_node/depth/depth\_registered \\
+  /zed/zed_node/depth/depth_registered \\
 
-  \--qos-reliability reliable \\
+  --qos-reliability reliable \\
 
-  \--once
+  --once
 
-\`\`\`
+```
 
 Result:
 
-\`\`\`text
+```text
 
-frame\_id:
+frame_id:
 
-zed\_left\_camera\_frame\_optical
+zed_left_camera_frame_optical
 
 height:
 
@@ -1098,17 +1098,17 @@ encoding:
 
 32FC1
 
-\`\`\`
+```
 
-\`32FC1\` means:
+`32FC1` means:
 
-\`\`\`text
+```text
 
 32-bit floating point
 
 1 channel
 
-\`\`\`
+```
 
 This confirms that real Depth data is being published.
 
@@ -1120,25 +1120,25 @@ The ZED wrapper successfully started positional tracking.
 
 Validated topics:
 
-\`\`\`text
+```text
 
-/zed/zed\_node/pose
+/zed/zed_node/pose
 
-/zed/zed\_node/pose/status
+/zed/zed_node/pose/status
 
-/zed/zed\_node/odom
+/zed/zed_node/odom
 
-\`\`\`
+```
 
 Camera-to-IMU transformations were also initialized.
 
 During startup the following warning appeared:
 
-\`\`\`text
+```text
 
 Gravity alignment issues detected. Recomputing alignment...
 
-\`\`\`
+```
 
 The warning did not prevent camera startup or ROS 2 data publication.
 
@@ -1150,9 +1150,9 @@ During one early test, the wireless mouse and keyboard temporarily became slow w
 
 Useful diagnostics:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/zed2
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2
 
 echo "=== USB TREE ==="
 
@@ -1192,19 +1192,19 @@ sudo dmesg --ctime | grep -iE \\
 
 'usb|xhci|hid|mouse|keyboard' | tail -80
 
-\`\`\`
+```
 
 The kernel log showed repeated resets of the ZED HID interface:
 
-\`\`\`text
+```text
 
-reset full-speed USB device ... using xhci\_hcd
+reset full-speed USB device ... using xhci_hcd
 
-\`\`\`
+```
 
 USB topology showed:
 
-\`\`\`text
+```text
 
 ZED video:
 
@@ -1218,13 +1218,13 @@ Logitech wireless receiver:
 
 USB 2.x tree / Bus 003
 
-\`\`\`
+```
 
 After restarting the camera and ROS 2 node, the problem was no longer reproducible.
 
 A later test showed:
 
-\`\`\`text
+```text
 
 ZED connected:
 
@@ -1234,27 +1234,27 @@ ZED ROS node running:
 
 Mouse normal
 
-\`\`\`
+```
 
 Therefore no system configuration changes were made.
 
 If the issue reappears, check:
 
-\`\`\`bash
+```bash
 
 lsusb -t
 
-\`\`\`
+```
 
 and:
 
-\`\`\`bash
+```bash
 
 sudo dmesg --ctime | grep -iE \\
 
 'usb|xhci|hid|mouse|keyboard' | tail -100
 
-\`\`\`
+```
 
 before changing any configuration.
 
@@ -1262,7 +1262,7 @@ before changing any configuration.
 
 **# 18. ZED 2 Final Validation**
 
-\`\`\`text
+```text
 
 Hardware                 PASS
 
@@ -1296,7 +1296,7 @@ TF / Camera transforms    PASS
 
 NITROS                    PASS
 
-\`\`\`
+```
 
 ZED 2 is ready for perception development.
 
@@ -1306,7 +1306,7 @@ ZED 2 is ready for perception development.
 
 Validated environment:
 
-\`\`\`text
+```text
 
 Camera:
 
@@ -1336,19 +1336,19 @@ IMU:
 
 BMI055
 
-\`\`\`
+```
 
 Installed ROS packages:
 
-\`\`\`text
+```text
 
-realsense2\_camera
+realsense2_camera
 
-realsense2\_camera\_msgs
+realsense2_camera_msgs
 
-realsense2\_description
+realsense2_description
 
-\`\`\`
+```
 
 **---**
 
@@ -1461,35 +1461,35 @@ Unlike the ZED wrapper, no RealSense source repository was cloned into the proje
 
 Directory:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/realsense\_d435i
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
-\`\`\`
+```
 
 USB test:
 
-\`\`\`bash
+```bash
 
 lsusb | grep -i -E 'Intel|RealSense|8086'
 
-\`\`\`
+```
 
 Detected:
 
-\`\`\`text
+```text
 
 Intel(R) RealSense(TM) Depth Camera 435i
 
-\`\`\`
+```
 
 USB ID:
 
-\`\`\`text
+```text
 
 8086:0b3a
 
-\`\`\`
+```
 
 **---**
 
@@ -1497,55 +1497,55 @@ USB ID:
 
 Check:
 
-\`\`\`bash
+```bash
 
 command -v realsense-viewer
 
 command -v rs-enumerate-devices
 
-\`\`\`
+```
 
 Installed:
 
-\`\`\`text
+```text
 
 /opt/ros/jazzy/bin/realsense-viewer
 
 /opt/ros/jazzy/bin/rs-enumerate-devices
 
-\`\`\`
+```
 
 Check versions:
 
-\`\`\`bash
+```bash
 
 realsense-viewer --version
 
 rs-enumerate-devices --version
 
-\`\`\`
+```
 
 Result:
 
-\`\`\`text
+```text
 
 2.58.1.0
 
-\`\`\`
+```
 
 **---**
 
 **# 22. RealSense Device Information**
 
-\`\`\`bash
+```bash
 
 rs-enumerate-devices
 
-\`\`\`
+```
 
 Validated:
 
-\`\`\`text
+```text
 
 Name:
 
@@ -1575,7 +1575,7 @@ IMU:
 
 BMI055
 
-\`\`\`
+```
 
 **---**
 
@@ -1583,7 +1583,7 @@ BMI055
 
 Depth examples:
 
-\`\`\`text
+```text
 
 1280x720 Z16 @ 30/15/6 Hz
 
@@ -1591,11 +1591,11 @@ Depth examples:
 
 640x480 Z16 @ 90/60/30/15/6 Hz
 
-\`\`\`
+```
 
 Color examples:
 
-\`\`\`text
+```text
 
 1920x1080 @ 30/15/6 Hz
 
@@ -1605,11 +1605,11 @@ Color examples:
 
 848x480 @ 60/30/15/6 Hz
 
-\`\`\`
+```
 
 Motion module:
 
-\`\`\`text
+```text
 
 Accelerometer:
 
@@ -1619,7 +1619,7 @@ Gyroscope:
 
 400 / 200 Hz
 
-\`\`\`
+```
 
 **---**
 
@@ -1627,23 +1627,23 @@ Gyroscope:
 
 Check topology:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/realsense\_d435i
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 lsusb -t
 
-\`\`\`
+```
 
 Validated:
 
-\`\`\`text
+```text
 
 USB 3.2
 
 5000M
 
-\`\`\`
+```
 
 The D435i was connected to the SuperSpeed USB bus.
 
@@ -1657,23 +1657,23 @@ This provides useful separation between the high-bandwidth RGB-D camera stream a
 
 Start:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/realsense\_d435i
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 realsense-viewer
 
-\`\`\`
+```
 
 The RealSense Viewer successfully displayed camera data including a 3D PointCloud.
 
 During one viewer test the following notification appeared:
 
-\`\`\`text
+```text
 
 Right MIPI error
 
-\`\`\`
+```
 
 The camera was subsequently tested using ROS 2.
 
@@ -1687,9 +1687,9 @@ If it reappears repeatedly, USB/camera diagnostics should be performed.
 
 **# 26. RealSense Diagnostic Commands**
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/realsense\_d435i
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 echo "=== REALSENSE USB CONNECTION ==="
 
@@ -1711,7 +1711,7 @@ sudo dmesg --ctime | grep -iE \\
 
 'realsense|8086|0b3a|usb|uvc|xhci' | tail -100
 
-\`\`\`
+```
 
 **---**
 
@@ -1719,27 +1719,27 @@ sudo dmesg --ctime | grep -iE \\
 
 Check:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/realsense\_d435i
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 source /opt/ros/jazzy/setup.bash
 
 ros2 pkg list | grep -i realsense
 
-\`\`\`
+```
 
 Result:
 
-\`\`\`text
+```text
 
-realsense2\_camera
+realsense2_camera
 
-realsense2\_camera\_msgs
+realsense2_camera_msgs
 
-realsense2\_description
+realsense2_description
 
-\`\`\`
+```
 
 No additional installation was necessary.
 
@@ -1749,39 +1749,39 @@ No additional installation was necessary.
 
 Terminal 1:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/realsense\_d435i
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 source /opt/ros/jazzy/setup.bash
 
-ros2 launch realsense2\_camera rs\_launch.py \\
+ros2 launch realsense2_camera rs_launch.py \\
 
-  enable\_color:=true \\
+  enable_color:=true \\
 
-  enable\_depth:=true \\
+  enable_depth:=true \\
 
-  enable\_gyro:=true \\
+  enable_gyro:=true \\
 
-  enable\_accel:=true \\
+  enable_accel:=true \\
 
-  align\_depth.enable:=true \\
+  align_depth.enable:=true \\
 
   pointcloud.enable:=true
 
-\`\`\`
+```
 
 Successful startup:
 
-\`\`\`text
+```text
 
 RealSense Node Is Up!
 
-\`\`\`
+```
 
 Detected:
 
-\`\`\`text
+```text
 
 RealSense ROS:
 
@@ -1803,7 +1803,7 @@ Firmware:
 
 5.17.0.10
 
-\`\`\`
+```
 
 **---**
 
@@ -1811,7 +1811,7 @@ Firmware:
 
 ROS 2 selected:
 
-\`\`\`text
+```text
 
 Depth:
 
@@ -1831,17 +1831,17 @@ RGB8
 
 Gyro:
 
-MOTION\_XYZ32F
+MOTION_XYZ32F
 
 200 Hz
 
 Accel:
 
-MOTION\_XYZ32F
+MOTION_XYZ32F
 
 63 Hz
 
-\`\`\`
+```
 
 **---**
 
@@ -1849,17 +1849,17 @@ MOTION\_XYZ32F
 
 During startup:
 
-\`\`\`text
+```text
 
 IMU Calibration is not available, default intrinsic and extrinsic will be used.
 
-\`\`\`
+```
 
 The Motion Module nevertheless started successfully.
 
 Both streams were functional:
 
-\`\`\`text
+```text
 
 Gyro:
 
@@ -1869,7 +1869,7 @@ Accel:
 
 63 Hz
 
-\`\`\`
+```
 
 This warning does not block Phase 01.
 
@@ -1881,9 +1881,9 @@ It should be revisited later if high-precision visual-inertial fusion or calibra
 
 Terminal 2:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/realsense\_d435i
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 source /opt/ros/jazzy/setup.bash
 
@@ -1915,47 +1915,47 @@ echo "=== IMU TOPICS ==="
 
 ros2 topic list | grep -E 'gyro|accel|imu'
 
-\`\`\`
+```
 
 Important topics:
 
-\`\`\`text
+```text
 
-/camera/camera/color/image\_raw
+/camera/camera/color/image_raw
 
-/camera/camera/color/camera\_info
+/camera/camera/color/camera_info
 
-/camera/camera/depth/image\_rect\_raw
+/camera/camera/depth/image_rect_raw
 
-/camera/camera/depth/camera\_info
+/camera/camera/depth/camera_info
 
-/camera/camera/aligned\_depth\_to\_color/image\_raw
+/camera/camera/aligned_depth_to_color/image_raw
 
-/camera/camera/aligned\_depth\_to\_color/camera\_info
+/camera/camera/aligned_depth_to_color/camera_info
 
 /camera/camera/depth/color/points
 
 /camera/camera/gyro/sample
 
-/camera/camera/gyro/imu\_info
+/camera/camera/gyro/imu_info
 
 /camera/camera/accel/sample
 
-/camera/camera/accel/imu\_info
+/camera/camera/accel/imu_info
 
-\`\`\`
+```
 
 Extrinsics:
 
-\`\`\`text
+```text
 
-/camera/camera/extrinsics/depth\_to\_accel
+/camera/camera/extrinsics/depth_to_accel
 
-/camera/camera/extrinsics/depth\_to\_color
+/camera/camera/extrinsics/depth_to_color
 
-/camera/camera/extrinsics/depth\_to\_gyro
+/camera/camera/extrinsics/depth_to_gyro
 
-\`\`\`
+```
 
 **---**
 
@@ -1963,27 +1963,27 @@ Extrinsics:
 
 Terminal 2:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/realsense\_d435i
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 source /opt/ros/jazzy/setup.bash
 
 echo "=== RGB RATE ==="
 
-timeout 6 ros2 topic hz /camera/camera/color/image\_raw
+timeout 6 ros2 topic hz /camera/camera/color/image_raw
 
 echo
 
 echo "=== DEPTH RATE ==="
 
-timeout 6 ros2 topic hz /camera/camera/depth/image\_rect\_raw
+timeout 6 ros2 topic hz /camera/camera/depth/image_rect_raw
 
 echo
 
 echo "=== ALIGNED DEPTH RATE ==="
 
-timeout 6 ros2 topic hz /camera/camera/aligned\_depth\_to\_color/image\_raw
+timeout 6 ros2 topic hz /camera/camera/aligned_depth_to_color/image_raw
 
 echo
 
@@ -2003,35 +2003,35 @@ echo "=== ACCEL RATE ==="
 
 timeout 6 ros2 topic hz /camera/camera/accel/sample
 
-\`\`\`
+```
 
 Measured:
 
-\`\`\`text
+```text
 
 RGB:
 
-\~29.9–30.0 Hz
+~29.9–30.0 Hz
 
 Depth:
 
-\~30.0 Hz
+~30.0 Hz
 
 Aligned Depth:
 
-\~29–30 Hz
+~29–30 Hz
 
 Gyro:
 
-\~200.35 Hz
+~200.35 Hz
 
 Accel:
 
-\~63.68 Hz
+~63.68 Hz
 
-\`\`\`
+```
 
-The initial PointCloud \`ros2 topic hz\` command did not display a rate.
+The initial PointCloud `ros2 topic hz` command did not display a rate.
 
 Therefore the PointCloud itself was validated directly.
 
@@ -2041,9 +2041,9 @@ Therefore the PointCloud itself was validated directly.
 
 Check publisher:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/realsense\_d435i
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 source /opt/ros/jazzy/setup.bash
 
@@ -2051,17 +2051,17 @@ ros2 topic info \\
 
   /camera/camera/depth/color/points \\
 
-  \--verbose
+  --verbose
 
-\`\`\`
+```
 
 Result:
 
-\`\`\`text
+```text
 
 Type:
 
-sensor\_msgs/msg/PointCloud2
+sensor_msgs/msg/PointCloud2
 
 Publisher count:
 
@@ -2073,33 +2073,33 @@ RELIABLE
 
 History:
 
-KEEP\_LAST (10)
+KEEP_LAST (10)
 
 Durability:
 
 VOLATILE
 
-\`\`\`
+```
 
 Read one actual PointCloud:
 
-\`\`\`bash
+```bash
 
 timeout 10 ros2 topic echo \\
 
   /camera/camera/depth/color/points \\
 
-  \--once
+  --once
 
-\`\`\`
+```
 
 Result:
 
-\`\`\`text
+```text
 
-frame\_id:
+frame_id:
 
-camera\_depth\_optical\_frame
+camera_depth_optical_frame
 
 height:
 
@@ -2109,11 +2109,11 @@ width:
 
 153373
 
-\`\`\`
+```
 
 Point fields:
 
-\`\`\`text
+```text
 
 x
 
@@ -2123,7 +2123,7 @@ z
 
 rgb
 
-\`\`\`
+```
 
 Therefore the D435i produces a valid colored 3D PointCloud.
 
@@ -2131,7 +2131,7 @@ Therefore the D435i produces a valid colored 3D PointCloud.
 
 **# 34. RealSense D435i Final Validation**
 
-\`\`\`text
+```text
 
 Hardware                 PASS
 
@@ -2163,7 +2163,7 @@ Accelerometer             PASS
 
 Extrinsics                PASS
 
-\`\`\`
+```
 
 The D435i is ready for perception and manipulation development.
 
@@ -2171,41 +2171,41 @@ The D435i is ready for perception and manipulation development.
 
 **# 35. Camera Comparison After Phase 01**
 
-\| Capability | ZED 2 | RealSense D435i |
+| Capability | ZED 2 | RealSense D435i |
 
-\|---|---|---|
+|---|---|---|
 
-\| RGB | PASS | PASS |
+| RGB | PASS | PASS |
 
-\| Stereo Depth | PASS | PASS |
+| Stereo Depth | PASS | PASS |
 
-\| PointCloud | PASS | PASS |
+| PointCloud | PASS | PASS |
 
-\| IMU | PASS | PASS |
+| IMU | PASS | PASS |
 
-\| Gyroscope | PASS | PASS |
+| Gyroscope | PASS | PASS |
 
-\| Accelerometer | PASS | PASS |
+| Accelerometer | PASS | PASS |
 
-\| ROS 2 Jazzy | PASS | PASS |
+| ROS 2 Jazzy | PASS | PASS |
 
-\| TF / Extrinsics | PASS | PASS |
+| TF / Extrinsics | PASS | PASS |
 
-\| Positional Tracking | PASS | Not primary target |
+| Positional Tracking | PASS | Not primary target |
 
-\| Odometry | PASS | Not primary target |
+| Odometry | PASS | Not primary target |
 
-\| NITROS | PASS | Not tested in Phase 01 |
+| NITROS | PASS | Not tested in Phase 01 |
 
-\| Integrated ZED AI Models | PASS | No equivalent tested |
+| Integrated ZED AI Models | PASS | No equivalent tested |
 
-\| Compact Manipulator Mounting | Less suitable | Better suited |
+| Compact Manipulator Mounting | Less suitable | Better suited |
 
-\| Mobile / 3D Perception | Primary role | Possible |
+| Mobile / 3D Perception | Primary role | Possible |
 
-\| OpenMANIPULATOR-X | Possible | Primary candidate |
+| OpenMANIPULATOR-X | Possible | Primary candidate |
 
-\| TurtleBot3 | Primary candidate | Possible |
+| TurtleBot3 | Primary candidate | Possible |
 
 **---**
 
@@ -2215,45 +2215,45 @@ The following ROS 2 message types are important for the next phases.
 
 RGB and Depth:
 
-\`\`\`text
+```text
 
-sensor\_msgs/msg/Image
+sensor_msgs/msg/Image
 
-\`\`\`
+```
 
 Camera calibration:
 
-\`\`\`text
+```text
 
-sensor\_msgs/msg/CameraInfo
+sensor_msgs/msg/CameraInfo
 
-\`\`\`
+```
 
 PointCloud:
 
-\`\`\`text
+```text
 
-sensor\_msgs/msg/PointCloud2
+sensor_msgs/msg/PointCloud2
 
-\`\`\`
+```
 
 IMU:
 
-\`\`\`text
+```text
 
-sensor\_msgs/msg/Imu
+sensor_msgs/msg/Imu
 
-\`\`\`
+```
 
 Pose and transformations will later interact with:
 
-\`\`\`text
+```text
 
-geometry\_msgs
+geometry_msgs
 
 tf2
 
-\`\`\`
+```
 
 These message types form the basic interface between the camera layer and our own perception software.
 
@@ -2263,7 +2263,7 @@ These message types form the basic interface between the camera layer and our ow
 
 The important conceptual separation is:
 
-\`\`\`text
+```text
 
 Camera
 
@@ -2309,7 +2309,7 @@ Our ROS 2 Perception Nodes
 
         └── Segmentation
 
-\`\`\`
+```
 
 Phase 01 therefore validates the input layer.
 
@@ -2321,115 +2321,115 @@ Starting with Phase 02, we begin writing our own perception software.
 
 **## List cameras / USB devices**
 
-\`\`\`bash
+```bash
 
 lsusb
 
-\`\`\`
+```
 
 **## USB topology and speed**
 
-\`\`\`bash
+```bash
 
 lsusb -t
 
-\`\`\`
+```
 
 **## ROS 2 topics**
 
-\`\`\`bash
+```bash
 
 ros2 topic list
 
-\`\`\`
+```
 
 **## Topic information**
 
-\`\`\`bash
+```bash
 
-ros2 topic info \<TOPIC> --verbose
+ros2 topic info <TOPIC> --verbose
 
-\`\`\`
+```
 
 Example:
 
-\`\`\`bash
+```bash
 
 ros2 topic info \\
 
   /camera/camera/depth/color/points \\
 
-  \--verbose
+  --verbose
 
-\`\`\`
+```
 
 **## Read one message**
 
-\`\`\`bash
+```bash
 
-ros2 topic echo \<TOPIC> --once
+ros2 topic echo <TOPIC> --once
 
-\`\`\`
+```
 
 **## Measure frequency**
 
-\`\`\`bash
+```bash
 
-ros2 topic hz \<TOPIC>
+ros2 topic hz <TOPIC>
 
-\`\`\`
+```
 
 **## ROS nodes**
 
-\`\`\`bash
+```bash
 
 ros2 node list
 
-\`\`\`
+```
 
 **## ROS parameters**
 
-\`\`\`bash
+```bash
 
 ros2 param list
 
-\`\`\`
+```
 
 **## CPU load**
 
-\`\`\`bash
+```bash
 
 uptime
 
 ps -eo pid,comm,%cpu,%mem --sort=-%cpu | head -20
 
-\`\`\`
+```
 
 **## Memory**
 
-\`\`\`bash
+```bash
 
 free -h
 
-\`\`\`
+```
 
 **## NVIDIA GPU**
 
-\`\`\`bash
+```bash
 
 nvidia-smi
 
-\`\`\`
+```
 
 **## USB kernel errors**
 
-\`\`\`bash
+```bash
 
 sudo dmesg --ctime | grep -iE \\
 
 'usb|xhci|uvc|hid' | tail -100
 
-\`\`\`
+```
 
 **---**
 
@@ -2437,23 +2437,23 @@ sudo dmesg --ctime | grep -iE \\
 
 Terminal 1:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/zed2/ros2\_ws
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 
 source install/setup.bash
 
-ros2 launch zed\_wrapper zed\_camera.launch.py camera\_model:=zed2
+ros2 launch zed_wrapper zed_camera.launch.py camera_model:=zed2
 
-\`\`\`
+```
 
 Terminal 2:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/zed2/ros2\_ws
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 
@@ -2461,45 +2461,45 @@ source install/setup.bash
 
 ros2 topic list | grep zed
 
-\`\`\`
+```
 
 RGB:
 
-\`\`\`bash
+```bash
 
-ros2 topic hz /zed/zed\_node/rgb/color/rect/image
+ros2 topic hz /zed/zed_node/rgb/color/rect/image
 
-\`\`\`
+```
 
 PointCloud:
 
-\`\`\`bash
+```bash
 
-ros2 topic hz /zed/zed\_node/point\_cloud/cloud\_registered
+ros2 topic hz /zed/zed_node/point_cloud/cloud_registered
 
-\`\`\`
+```
 
 IMU:
 
-\`\`\`bash
+```bash
 
-ros2 topic hz /zed/zed\_node/imu/data
+ros2 topic hz /zed/zed_node/imu/data
 
-\`\`\`
+```
 
 Depth sample:
 
-\`\`\`bash
+```bash
 
 ros2 topic echo \\
 
-  /zed/zed\_node/depth/depth\_registered \\
+  /zed/zed_node/depth/depth_registered \\
 
-  \--qos-reliability reliable \\
+  --qos-reliability reliable \\
 
-  \--once
+  --once
 
-\`\`\`
+```
 
 **---**
 
@@ -2507,91 +2507,91 @@ ros2 topic echo \\
 
 Terminal 1:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/realsense\_d435i
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 source /opt/ros/jazzy/setup.bash
 
-ros2 launch realsense2\_camera rs\_launch.py \\
+ros2 launch realsense2_camera rs_launch.py \\
 
-  enable\_color:=true \\
+  enable_color:=true \\
 
-  enable\_depth:=true \\
+  enable_depth:=true \\
 
-  enable\_gyro:=true \\
+  enable_gyro:=true \\
 
-  enable\_accel:=true \\
+  enable_accel:=true \\
 
-  align\_depth.enable:=true \\
+  align_depth.enable:=true \\
 
   pointcloud.enable:=true
 
-\`\`\`
+```
 
 Terminal 2:
 
-\`\`\`bash
+```bash
 
-cd /home/sarvg/projects/robotics/ros2\_perception\_imitation\_learning/phase\_01\_camera\_ros2/realsense\_d435i
+cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 source /opt/ros/jazzy/setup.bash
 
 ros2 topic list | grep camera
 
-\`\`\`
+```
 
 RGB:
 
-\`\`\`bash
+```bash
 
-ros2 topic hz /camera/camera/color/image\_raw
+ros2 topic hz /camera/camera/color/image_raw
 
-\`\`\`
+```
 
 Depth:
 
-\`\`\`bash
+```bash
 
-ros2 topic hz /camera/camera/depth/image\_rect\_raw
+ros2 topic hz /camera/camera/depth/image_rect_raw
 
-\`\`\`
+```
 
 Aligned Depth:
 
-\`\`\`bash
+```bash
 
-ros2 topic hz /camera/camera/aligned\_depth\_to\_color/image\_raw
+ros2 topic hz /camera/camera/aligned_depth_to_color/image_raw
 
-\`\`\`
+```
 
 Gyro:
 
-\`\`\`bash
+```bash
 
 ros2 topic hz /camera/camera/gyro/sample
 
-\`\`\`
+```
 
 Accel:
 
-\`\`\`bash
+```bash
 
 ros2 topic hz /camera/camera/accel/sample
 
-\`\`\`
+```
 
 PointCloud sample:
 
-\`\`\`bash
+```bash
 
 ros2 topic echo \\
 
   /camera/camera/depth/color/points \\
 
-  \--once
+  --once
 
-\`\`\`
+```
 
 **---**
 
@@ -2601,11 +2601,11 @@ Both cameras are now successfully integrated into ROS 2 Jazzy.
 
 Final status:
 
-\`\`\`text
+```text
 
                  ZED 2       D435i
 
-                 \-----       -----
+                 -----       -----
 
 Hardware          PASS        PASS
 
@@ -2623,7 +2623,7 @@ IMU               PASS        PASS
 
 Calibration/TF    PASS        PASS
 
-\`\`\`
+```
 
 The project therefore has two functioning RGB-D perception platforms.
 
@@ -2631,23 +2631,23 @@ The project therefore has two functioning RGB-D perception platforms.
 
 **# 42. Phase 01 Completed**
 
-\`\`\`text
+```text
 
 PHASE 01 – CAMERA & ROS 2
 
 STATUS: COMPLETED
 
-\`\`\`
+```
 
 Validated cameras:
 
-\`\`\`text
+```text
 
 Stereolabs ZED 2          COMPLETE
 
 Intel RealSense D435i     COMPLETE
 
-\`\`\`
+```
 
 No additional camera-driver installation is currently required.
 
@@ -2681,23 +2681,23 @@ To reproduce Phase 01 on another Ubuntu 24.04 + ROS 2 Jazzy machine:
 
 Next:
 
-\`\`\`text
+```text
 
 Phase 02 – 2D Perception
 
-\`\`\`
+```
 
 Primary camera:
 
-\`\`\`text
+```text
 
 ZED 2
 
-\`\`\`
+```
 
 Initial architecture:
 
-\`\`\`text
+```text
 
 ZED 2
 
@@ -2723,7 +2723,7 @@ Python ROS 2 Node
 
   ▼
 
-cv\_bridge
+cv_bridge
 
   │
 
@@ -2743,13 +2743,13 @@ OpenCV
 
 2D Perception
 
-\`\`\`
+```
 
 Phase 02 will move from camera-driver validation to our own perception code.
 
 The purpose is to understand the complete path:
 
-\`\`\`text
+```text
 
 Camera
 
@@ -2765,6 +2765,6 @@ Camera
 
 → ROS 2 Output
 
-\`\`\`
+```
 
 This becomes the foundation for the later AI perception, segmentation, 3D perception, manipulation and imitation-learning phases.
