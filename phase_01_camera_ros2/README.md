@@ -44,7 +44,7 @@ Main project:
 
 ```text
 
-/home/sarvg/projects/robotics/ros2_perception_imitation_learning
+~/projects/robotics/ros2_perception_imitation_learning
 
 ```
 
@@ -52,7 +52,7 @@ Phase 01:
 
 ```text
 
-/home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2
+~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2
 
 ```
 
@@ -497,7 +497,7 @@ Directory:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2
 
 ```
 
@@ -707,7 +707,7 @@ Create workspace:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2
 
 mkdir -p ros2_ws/src
 
@@ -727,7 +727,7 @@ Install dependencies:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 
@@ -769,7 +769,7 @@ phase_01_camera_ros2/zed2/ros2_ws/src/zed-ros2-wrapper
 For a fresh clone of this project including the wrapper:
 
 ```bash
-cd /home/sarvg/projects/robotics
+cd ~/projects/robotics
 
 git clone --recurse-submodules \
   https://github.com/vagotec/ros2_perception_imitation_learning.git
@@ -778,7 +778,7 @@ git clone --recurse-submodules \
 If the project was cloned without submodules:
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning
+cd ~/projects/robotics/ros2_perception_imitation_learning
 
 git submodule update --init --recursive
 ```
@@ -820,7 +820,7 @@ Only `src/` and project-authored source/configuration files belong in Git.
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 
@@ -866,7 +866,7 @@ Terminal 1:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 
@@ -892,7 +892,7 @@ Terminal 2:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 
@@ -966,7 +966,7 @@ Terminal 2:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 
@@ -1024,7 +1024,7 @@ Check publisher:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 
@@ -1152,7 +1152,7 @@ Useful diagnostics:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2
 
 echo "=== USB TREE ==="
 
@@ -1463,7 +1463,7 @@ Directory:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 ```
 
@@ -1629,7 +1629,7 @@ Check topology:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 lsusb -t
 
@@ -1659,7 +1659,7 @@ Start:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 realsense-viewer
 
@@ -1689,7 +1689,7 @@ If it reappears repeatedly, USB/camera diagnostics should be performed.
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 echo "=== REALSENSE USB CONNECTION ==="
 
@@ -1721,7 +1721,7 @@ Check:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 source /opt/ros/jazzy/setup.bash
 
@@ -1751,7 +1751,7 @@ Terminal 1:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 source /opt/ros/jazzy/setup.bash
 
@@ -1883,7 +1883,7 @@ Terminal 2:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 source /opt/ros/jazzy/setup.bash
 
@@ -1965,7 +1965,7 @@ Terminal 2:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 source /opt/ros/jazzy/setup.bash
 
@@ -2043,7 +2043,7 @@ Check publisher:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 source /opt/ros/jazzy/setup.bash
 
@@ -2439,7 +2439,7 @@ Terminal 1:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 
@@ -2453,7 +2453,7 @@ Terminal 2:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 
@@ -2509,7 +2509,7 @@ Terminal 1:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 source /opt/ros/jazzy/setup.bash
 
@@ -2533,7 +2533,7 @@ Terminal 2:
 
 ```bash
 
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/realsense_d435i
 
 source /opt/ros/jazzy/setup.bash
 

@@ -64,13 +64,13 @@ Distance in meters         3D Point (X,Y,Z)
 Phase directory:
 
 ```text
-/home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_03_3d_perception
+~/projects/robotics/ros2_perception_imitation_learning/phase_03_3d_perception
 ```
 
 ROS 2 workspace:
 
 ```text
-/home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_03_3d_perception/ros2_ws
+~/projects/robotics/ros2_perception_imitation_learning/phase_03_3d_perception/ros2_ws
 ```
 
 Source structure:
@@ -164,7 +164,7 @@ This avoids loading incompatible user-installed NumPy packages from:
 Create the workspace:
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_03_3d_perception
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_03_3d_perception
 
 mkdir -p ros2_ws/src
 ```
@@ -178,7 +178,7 @@ source /opt/ros/jazzy/setup.bash
 Create the package:
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_03_3d_perception/ros2_ws/src
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_03_3d_perception/ros2_ws/src
 
 ros2 pkg create \
   zed2_3d_perception \
@@ -755,7 +755,7 @@ ros2 run zed2_3d_perception zed_pointcloud_xyz
 # 17. Build Phase 03
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_03_3d_perception/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_03_3d_perception/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 export PYTHONNOUSERSITE=1
@@ -783,7 +783,7 @@ It did not prevent the package from building successfully.
 # 18. Terminal 1 – Start ZED 2
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 source install/setup.bash
@@ -800,7 +800,7 @@ Keep this terminal running.
 # 19. Terminal 2 – Run Depth Distance
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_03_3d_perception/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_03_3d_perception/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 source install/setup.bash
@@ -826,7 +826,7 @@ The window displays:
 # 20. Terminal 2 – Run PointCloud XYZ
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_03_3d_perception/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_03_3d_perception/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 source install/setup.bash
@@ -861,7 +861,7 @@ Start ZED 2 in Terminal 1.
 Then in Terminal 2:
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_03_3d_perception/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_03_3d_perception/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 export PYTHONNOUSERSITE=1
@@ -1103,7 +1103,7 @@ These are generated locally.
 After cloning the project:
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_03_3d_perception/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_03_3d_perception/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 export PYTHONNOUSERSITE=1

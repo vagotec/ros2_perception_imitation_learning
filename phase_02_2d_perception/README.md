@@ -78,13 +78,13 @@ OpenCV
 Phase 02 directory:
 
 ```text
-/home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_02_2d_perception
+~/projects/robotics/ros2_perception_imitation_learning/phase_02_2d_perception
 ```
 
 ROS 2 workspace:
 
 ```text
-/home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_02_2d_perception/ros2_ws
+~/projects/robotics/ros2_perception_imitation_learning/phase_02_2d_perception/ros2_ws
 ```
 
 Source structure:
@@ -237,7 +237,7 @@ export PYTHONNOUSERSITE=1
 Create the workspace:
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_02_2d_perception
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_02_2d_perception
 
 mkdir -p ros2_ws/src
 ```
@@ -251,7 +251,7 @@ source /opt/ros/jazzy/setup.bash
 Create the Python package:
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_02_2d_perception/ros2_ws/src
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_02_2d_perception/ros2_ws/src
 
 ros2 pkg create \
   zed2_perception \
@@ -273,7 +273,7 @@ zed2_perception
 Use:
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_02_2d_perception
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_02_2d_perception
 
 source /opt/ros/jazzy/setup.bash
 export PYTHONNOUSERSITE=1
@@ -853,7 +853,7 @@ ros2 run zed2_perception zed_2d_perception
 From the workspace:
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_02_2d_perception/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_02_2d_perception/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 export PYTHONNOUSERSITE=1
@@ -885,7 +885,7 @@ Two terminals are required.
 ## Terminal 1 – Start ZED 2
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 source install/setup.bash
@@ -904,7 +904,7 @@ The ZED ROS 2 wrapper must remain running.
 To run Step 01:
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_02_2d_perception/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_02_2d_perception/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 source install/setup.bash
@@ -929,7 +929,7 @@ An OpenCV live image window opens successfully.
 To run the complete Phase 02 pipeline:
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_02_2d_perception/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_02_2d_perception/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 source install/setup.bash
@@ -1096,7 +1096,7 @@ These directories are generated locally and can be recreated with `colcon build`
 Because `build/`, `install/` and `log/` are intentionally not stored in Git, rebuild Phase 02 after cloning:
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_02_2d_perception/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_02_2d_perception/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 export PYTHONNOUSERSITE=1

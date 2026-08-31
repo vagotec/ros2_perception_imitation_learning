@@ -94,13 +94,13 @@ Robot coordinates
 Phase directory:
 
 ```text
-/home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_04_tf2_calibration
+~/projects/robotics/ros2_perception_imitation_learning/phase_04_tf2_calibration
 ```
 
 ROS 2 workspace:
 
 ```text
-/home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_04_tf2_calibration/ros2_ws
+~/projects/robotics/ros2_perception_imitation_learning/phase_04_tf2_calibration/ros2_ws
 ```
 
 Source structure:
@@ -172,7 +172,7 @@ export PYTHONNOUSERSITE=1
 The package was created with:
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning
+cd ~/projects/robotics/ros2_perception_imitation_learning
 
 mkdir -p phase_04_tf2_calibration/ros2_ws/src
 
@@ -376,7 +376,7 @@ The node was started successfully.
 Command:
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_04_tf2_calibration/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_04_tf2_calibration/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 source install/setup.bash
@@ -781,7 +781,7 @@ Two terminals are required.
 ## Terminal 1 – Static TF
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_04_tf2_calibration/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_04_tf2_calibration/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 source install/setup.bash
@@ -801,7 +801,7 @@ Published static transform: robot_base -> zed_left_camera_frame
 ## Terminal 2 – Transform Point
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_04_tf2_calibration/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_04_tf2_calibration/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 source install/setup.bash
@@ -824,7 +824,7 @@ Robot base frame: x=1.500, y=0.100, z=0.750
 Build command:
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_04_tf2_calibration/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_04_tf2_calibration/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 export PYTHONNOUSERSITE=1
@@ -1158,7 +1158,7 @@ The repository stores the source code required to rebuild the workspace.
 After cloning the repository:
 
 ```bash
-cd /home/sarvg/projects/robotics/ros2_perception_imitation_learning/phase_04_tf2_calibration/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_04_tf2_calibration/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 export PYTHONNOUSERSITE=1
