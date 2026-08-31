@@ -1,0 +1,3 @@
+[submodule "phase_01_camera_ros2/zed2/ros2_ws/src/zed-ros2-wrapper"]
+	path = phase_01_camera_ros2/zed2/ros2_ws/src/zed-ros2-wrapper
+	url = https://github.com/stereolabs/zed-ros2-wrapper.git

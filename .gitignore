@@ -9,7 +9,6 @@
 # Third-party repositories
 # Re-clone these dependencies when setting up the project.
 # ============================================================
-phase_01_camera_ros2/zed2/ros2_ws/src/zed-ros2-wrapper/
 
 # ============================================================
 # Python
