@@ -1,12 +1,12 @@
-# Phase 05 - AI Object Detection
+# Phase 05 - AI Object Detection & 3D Object Localization
 
 ## ROS 2 Perception & Imitation Learning
 
-Phase 05 extends the perception pipeline from the previous phases with real object detection and 3D object localization.
+Phase 05 combines the perception pipeline created in the previous phases.
 
-The goal is no longer to select an arbitrary image pixel manually.
+The goal is no longer to measure only an arbitrary image pixel.
 
-Instead, the system detects real objects in the RGB image and determines their spatial position in 3D.
+Instead, the system detects real objects, determines their 3D position and finally transforms the detected object position from the ZED camera coordinate system into a robot coordinate system.
 
 The complete pipeline is:
 
@@ -19,15 +19,13 @@ Object Detection
   ↓
 2D Bounding Box
   ↓
-Object Center
-  ↓
 3D Object Position
   ↓
-Camera Frame
+zed_left_camera_frame
   ↓
 TF2
   ↓
-Robot Base Frame
+robot_base
 ```
 
 ---
@@ -38,25 +36,17 @@ The goals of Phase 05 are:
 
 - convert a 2D image pixel into a 3D point
 - understand pixel + depth → XYZ
-- detect objects in an RGB image
-- use native ZED 2 object detection
-- obtain the 3D position of detected objects
-- understand the ZED object detection ROS 2 messages
-- use TF2 to transform object coordinates between coordinate frames
-- transform detected objects from the ZED camera frame into a robot base frame
-- prepare the perception pipeline for later robot manipulation and imitation learning
+- detect a simple object using classical computer vision
+- determine the 3D position of the detected object
+- use the native ZED AI Object Detection
+- consume `zed_msgs/msg/ObjectsStamped`
+- obtain AI-detected object classes such as `Laptop` and `Person`
+- understand the ZED TF tree
+- transform detected object coordinates from the camera frame into `robot_base`
 
 ---
 
 # 2. Project Structure
-
-The Phase 05 directory is:
-
-```text
-~/projects/robotics/ros2_perception_imitation_learning/phase_05_ai_object_detection
-```
-
-Structure:
 
 ```text
 phase_05_ai_object_detection/
@@ -78,29 +68,20 @@ phase_05_ai_object_detection/
                 └── step04_object_to_robot_frame.py
 ```
 
-The ROS 2 package is:
-
-```text
-zed2_object_localization
-```
-
 ---
 
-# 3. Prerequisites
+# 3. ROS 2 Environment
 
-The following components are used:
+The project uses:
 
-- Ubuntu 24.04 LTS
-- ROS 2 Jazzy
-- ZED 2
-- ZED SDK
-- ZED ROS 2 Wrapper
-- OpenCV
-- cv_bridge
-- TF2
-- Python 3
+```text
+ROS 2: Jazzy
+Camera: Stereolabs ZED 2
+ROS_DOMAIN_ID: 30
+RMW: Fast DDS
+```
 
-The ZED ROS 2 workspace from Phase 01 is reused:
+The ZED ROS 2 workspace from Phase 01 is:
 
 ```text
 ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
@@ -114,29 +95,28 @@ The Phase 05 workspace is:
 
 ---
 
-# 4. ROS 2 Environment
+# 4. Build Phase 05
 
-For all ROS 2 terminals in this phase:
+Build the package with:
 
 ```bash
-source /opt/ros/jazzy/setup.bash
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_05_ai_object_detection/ros2_ws
 
+source /opt/ros/jazzy/setup.bash
 source ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws/install/setup.bash
 
 export ROS_DOMAIN_ID=30
 export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 export PYTHONNOUSERSITE=1
-```
 
-For Phase 05 nodes additionally source:
-
-```bash
-source ~/projects/robotics/ros2_perception_imitation_learning/phase_05_ai_object_detection/ros2_ws/install/setup.bash
+colcon build \
+  --symlink-install \
+  --packages-select zed2_object_localization
 ```
 
 ---
 
-# 5. Step 01 - Pixel to 3D
+# 5. Example 01 - Pixel to 3D
 
 File:
 
@@ -144,35 +124,79 @@ File:
 zed2_object_localization/step01_pixel_to_3d.py
 ```
 
-The first step demonstrates the fundamental relationship between:
+The first example demonstrates the fundamental relationship:
 
 ```text
-RGB Pixel
-   +
+2D Pixel
++
 Depth
-   ↓
-3D Position
++
+Camera Intrinsics
+=
+3D Point
 ```
 
-An image pixel is represented by:
+The center pixel of the image is selected and converted into a 3D coordinate.
+
+Example result:
 
 ```text
-u, v
+Pixel (640, 360)
+    ↓
+X = -0.049 m
+Y =  0.028 m
+Z =  0.958 m
 ```
 
-Using the corresponding depth information, the 3D position can be determined:
+This means that the selected image pixel corresponds to a physical point approximately 0.96 m away from the camera.
+
+## Example 01 - Terminal 1
+
+Start the ZED 2 camera.
+
+```bash
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
+
+source /opt/ros/jazzy/setup.bash
+source install/setup.bash
+
+export ROS_DOMAIN_ID=30
+export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+export PYTHONNOUSERSITE=1
+
+ros2 launch zed_wrapper zed_camera.launch.py \
+  camera_model:=zed2
+```
+
+Leave Terminal 1 running.
+
+## Example 01 - Terminal 2
+
+Run the pixel-to-3D node.
+
+```bash
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_05_ai_object_detection/ros2_ws
+
+source /opt/ros/jazzy/setup.bash
+source ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws/install/setup.bash
+source install/setup.bash
+
+export ROS_DOMAIN_ID=30
+export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+export PYTHONNOUSERSITE=1
+
+ros2 run zed2_object_localization pixel_to_3d
+```
+
+Example output:
 
 ```text
-X
-Y
-Z
+Pixel (640, 360) -> X=-0.049 m, Y=0.028 m, Z=0.958 m
 ```
-
-This establishes the fundamental connection between 2D and 3D perception.
 
 ---
 
-# 6. Step 02 - Object to 3D
+# 6. Example 02 - Classical Object Detection to 3D
 
 File:
 
@@ -180,39 +204,105 @@ File:
 zed2_object_localization/step02_object_to_3d.py
 ```
 
-The next step combines object detection with depth information.
+The second example extends the first example.
 
-The processing pipeline is:
+Instead of selecting a fixed pixel, an object is detected in the RGB image.
+
+The pipeline is:
 
 ```text
 RGB Image
    ↓
 Object Detection
    ↓
-2D Bounding Box
+Bounding Box
    ↓
 Bounding Box Center
    ↓
-Depth / Point Cloud
+Depth
    ↓
-3D Object Position
+3D Position
 ```
 
-The fundamental concept is:
+The program displays the detected object using an OpenCV window.
+
+The detected object's center pixel is combined with depth information to calculate the 3D position.
+
+Example:
 
 ```text
-Object Detection
-+
-Depth
-=
-3D Object Localization
+Object center (505, 188)
+    ↓
+X = -0.187 m
+Y = -0.239 m
+Z =  0.971 m
 ```
 
-At this stage, the object position is expressed relative to the camera coordinate system.
+## Example 02 - Terminal 1
+
+Start the ZED 2 camera.
+
+```bash
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
+
+source /opt/ros/jazzy/setup.bash
+source install/setup.bash
+
+export ROS_DOMAIN_ID=30
+export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+export PYTHONNOUSERSITE=1
+
+ros2 launch zed_wrapper zed_camera.launch.py \
+  camera_model:=zed2
+```
+
+Leave Terminal 1 running.
+
+## Example 02 - Terminal 2
+
+Run the classical object detection and 3D localization node.
+
+```bash
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_05_ai_object_detection/ros2_ws
+
+source /opt/ros/jazzy/setup.bash
+source ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws/install/setup.bash
+source install/setup.bash
+
+export ROS_DOMAIN_ID=30
+export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+export PYTHONNOUSERSITE=1
+
+ros2 run zed2_object_localization object_to_3d
+```
+
+An OpenCV window shows the detected object.
+
+Example output:
+
+```text
+Object center (505, 188) -> X=-0.187 m, Y=-0.239 m, Z=0.971 m
+```
+
+The important difference compared with Example 01 is:
+
+```text
+Example 01
+Fixed pixel
+    ↓
+3D coordinate
+
+Example 02
+Detected object
+    ↓
+Object center
+    ↓
+3D coordinate
+```
 
 ---
 
-# 7. Step 03 - Native ZED Object Detection
+# 7. Example 03 - Native ZED AI Object Detection
 
 File:
 
@@ -220,9 +310,83 @@ File:
 zed2_object_localization/step03_zed_object_detection.py
 ```
 
-The ZED 2 native object detection pipeline is used to detect objects and obtain their 3D information.
+The third example replaces the simple classical detector with the native AI Object Detection provided by the ZED SDK and ZED ROS 2 Wrapper.
 
-Object detection is enabled through the ZED ROS 2 service:
+The pipeline becomes:
+
+```text
+ZED 2
+   ↓
+ZED SDK
+   ↓
+AI Object Detection
+   ↓
+zed_msgs/msg/ObjectsStamped
+   ↓
+Object Class
+   ↓
+2D Bounding Box
+   ↓
+3D Position
+```
+
+The ZED ROS 2 Wrapper publishes detected objects on:
+
+```text
+/zed/zed_node/obj_det/objects
+```
+
+The message type is:
+
+```text
+zed_msgs/msg/ObjectsStamped
+```
+
+Each detected object contains information including:
+
+```text
+label
+label_id
+sublabel
+confidence
+position
+velocity
+bounding_box_2d
+bounding_box_3d
+dimensions_3d
+tracking_state
+```
+
+During the experiment, the ZED detector successfully recognized objects such as:
+
+```text
+Laptop
+Person
+```
+
+## Example 03 - Terminal 1
+
+Start the ZED 2 camera.
+
+```bash
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
+
+source /opt/ros/jazzy/setup.bash
+source install/setup.bash
+
+export ROS_DOMAIN_ID=30
+export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+export PYTHONNOUSERSITE=1
+
+ros2 launch zed_wrapper zed_camera.launch.py \
+  camera_model:=zed2
+```
+
+Leave Terminal 1 running.
+
+## Example 03 - Terminal 2
+
+Enable the ZED Object Detection module.
 
 ```bash
 cd ~/projects/robotics/ros2_perception_imitation_learning/phase_05_ai_object_detection/ros2_ws
@@ -247,188 +411,77 @@ success=True
 message='Object Detection started'
 ```
 
-If object detection is already active:
+If Object Detection is already active:
 
 ```text
 success=False
 message='Object Detection is already running'
 ```
 
-This does not indicate a failure of the running detector. It means that object detection has already been enabled.
+This is not an error. It means the detector is already running.
 
----
+## Example 03 - Terminal 3
 
-# 8. ZED Object Detection Topic
-
-Detected objects are published on:
-
-```text
-/zed/zed_node/obj_det/objects
-```
-
-The topic type is:
-
-```text
-zed_msgs/msg/ObjectsStamped
-```
-
-The interface can be inspected with:
+Run our ZED AI Object Detection visualization node.
 
 ```bash
 cd ~/projects/robotics/ros2_perception_imitation_learning/phase_05_ai_object_detection/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
 source ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws/install/setup.bash
+source install/setup.bash
 
 export ROS_DOMAIN_ID=30
 export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 export PYTHONNOUSERSITE=1
 
-ros2 topic type /zed/zed_node/obj_det/objects
-
-TYPE=$(ros2 topic type /zed/zed_node/obj_det/objects)
-ros2 interface show "$TYPE"
-
-timeout 10 ros2 topic echo \
-  /zed/zed_node/obj_det/objects \
-  --once
+ros2 run zed2_object_localization zed_object_detection
 ```
+
+The OpenCV visualization shows the AI-detected objects together with their bounding boxes and 3D information.
 
 ---
 
-# 9. ZED Object Message
+# 8. ZED ObjectsStamped Message
 
-The message contains an array of detected objects.
-
-Important fields include:
+The ZED detector publishes:
 
 ```text
-label
-label_id
-sublabel
-confidence
-position
-position_covariance
-velocity
-tracking_available
-tracking_state
-action_state
-bounding_box_2d
-bounding_box_3d
-dimensions_3d
+/zed/zed_node/obj_det/objects
 ```
 
-The most important field for 3D localization is:
+with:
 
 ```text
-float32[3] position
+zed_msgs/msg/ObjectsStamped
 ```
 
-A detected object can therefore directly provide:
+An example detected object was:
 
-```text
-X
-Y
-Z
-```
-
-Example from the experiment:
-
-```text
+```yaml
 label: ELECTRONICS
 sublabel: Laptop
+confidence: 23.935165405273438
 
 position:
-  X ≈ 0.227 m
-  Y ≈ -0.201 m
-  Z ≈ -0.057 m
+- 0.226863294839859
+- -0.20143015682697296
+- -0.0565602146089077
 ```
 
-The ZED pipeline therefore combines:
+The message frame was:
 
 ```text
-Object Detection
-+
-Stereo Depth
-+
-3D Localization
+zed_left_camera_frame
 ```
+
+This is important because the object coordinates are initially expressed relative to the ZED camera.
+
+For robot manipulation, the coordinates must eventually be transformed into the robot coordinate system.
 
 ---
 
-# 10. Native ZED Object Detection Visualization
-
-The visualization created in:
-
-```text
-step03_zed_object_detection.py
-```
-
-shows detected objects directly in the ZED RGB image.
-
-The visualization contains:
-
-- object label
-- confidence
-- 2D bounding box
-- object center
-- X coordinate
-- Y coordinate
-- Z coordinate
-
-Objects successfully detected during the experiment included:
-
-```text
-Person
-Laptop
-```
-
-The resulting pipeline is:
-
-```text
-ZED 2
-  ↓
-RGB Image
-  ↓
-Native Object Detection
-  ↓
-Bounding Box
-  ↓
-Object Position X/Y/Z
-```
-
----
-
-# 11. Why Camera Coordinates Are Not Enough
-
-The ZED detector initially reports the detected object's position in the camera coordinate system.
-
-Example:
-
-```text
-Laptop
-
-camera:
-X ≈ 0.227 m
-Y ≈ -0.173 m
-Z ≈ -0.059 m
-```
-
-For robot manipulation this is not sufficient.
-
-A robot normally needs the position relative to its own base frame:
-
-```text
-Object Position
-      ↓
-Robot Base Frame
-```
-
-Therefore the coordinate position must be transformed using TF2.
-
----
-
-# 12. Step 04 - Object to Robot Frame
+# 9. Example 04 - AI Object Position in Robot Base Frame
 
 File:
 
@@ -436,385 +489,173 @@ File:
 zed2_object_localization/step04_object_to_robot_frame.py
 ```
 
-This node subscribes to:
+The final example combines:
 
 ```text
-/zed/zed_node/obj_det/objects
-```
-
-and transforms the detected 3D object positions using TF2.
-
-The goal is:
-
-```text
-Object Position
-      ↓
-Camera Frame
-      ↓
+AI Object Detection
++
+3D Object Position
++
 TF2
-      ↓
-Robot Base Frame
 ```
 
-The source frame reported by the ZED object message is:
+The pipeline is:
 
 ```text
+ZED AI Object Detection
+        ↓
+ObjectsStamped
+        ↓
+Object position
+        ↓
 zed_left_camera_frame
-```
-
-The target frame used by the Phase 05 node is:
-
-```text
+        ↓
+TF2
+        ↓
 robot_base
 ```
 
+This is the most important step for later robot manipulation.
+
+A robot cannot directly use image coordinates.
+
+It needs an object position relative to its own coordinate system.
+
 ---
 
-# 13. ZED TF Frames
+# 10. Understanding the ZED TF Tree
 
-The ZED wrapper publishes its own TF hierarchy.
+The ZED ROS 2 Wrapper creates its own TF tree.
 
-Important frames observed during the experiment include:
+Relevant frames include:
 
 ```text
 map
+ ↓
+odom
+ ↓
 zed_camera_link
+ ↓
 zed_camera_center
-zed_left_camera_frame
-zed_left_camera_frame_optical
-zed_right_camera_frame
-zed_right_camera_frame_optical
-```
-
-The internal ZED static hierarchy includes:
-
-```text
-zed_camera_link
-      ↓
-zed_camera_center
-      ↓
+ ↓
 zed_left_camera_frame
 ```
 
-The transformation between:
+The relevant static ZED transforms observed during Phase 05 included:
 
 ```text
 zed_camera_link
+    ↓
+zed_camera_center
+    ↓
+zed_left_camera_frame
+```
+
+For example:
+
+```text
+zed_camera_link -> zed_camera_center
+Translation:
+x = 0.000
+y = 0.000
+z = 0.015
+
+Rotation:
+pitch ≈ 2.865°
 ```
 
 and:
 
 ```text
-zed_left_camera_frame
-```
+zed_camera_center -> zed_left_camera_frame
 
-was successfully verified.
-
-Example:
-
-```text
 Translation:
-X = -0.010 m
-Y =  0.060 m
-Z =  0.015 m
-
-Rotation:
-Pitch ≈ 2.865°
+x = -0.010
+y =  0.060
+z =  0.000
 ```
 
 ---
 
-# 14. TF2 Problem Encountered
+# 11. Important TF2 Lesson
 
-Initially the experimental robot frame was connected directly to:
-
-```text
-zed_camera_link
-```
-
-using:
+Initially we tried to publish:
 
 ```text
 robot_base
-   ↓
+    ↓
 zed_camera_link
 ```
 
-The static transform itself appeared correctly on:
+using another static transform.
 
-```text
-/tf_static
-```
+This caused disconnected or conflicting TF trees because the ZED ROS 2 Wrapper already manages the camera side of the TF hierarchy.
 
-but TF2 still reported:
-
-```text
-Could not find a connection between 'robot_base'
-and 'zed_left_camera_frame'
-because they are not part of the same tree.
-
-Tf has two or more unconnected trees.
-```
-
-Inspection of `/tf_static` showed that the static transform publisher was active, while the ZED wrapper maintained its own TF hierarchy.
-
-The important lesson from this experiment is:
-
-```text
-Seeing a transform on /tf_static does not automatically
-guarantee that the complete TF graph used by the application
-forms the intended connected tree.
-```
-
-The existing sensor TF hierarchy therefore has to be inspected before adding an external robot frame.
-
----
-
-# 15. Working TF Connection
-
-For the current experiment, the working connection was created between:
+The working solution was to connect the robot coordinate system to the root of the existing ZED TF tree:
 
 ```text
 robot_base
-```
-
-and the ZED global frame:
-
-```text
+    ↓
 map
-```
-
-The resulting hierarchy was:
-
-```text
-robot_base
     ↓
-   map
+...
     ↓
-ZED TF Tree
+zed_camera_link
+    ↓
+zed_camera_center
     ↓
 zed_left_camera_frame
 ```
 
-The experimental static transform was started with:
+For this Phase 05 experiment we used the temporary example transform:
+
+```text
+robot_base -> map
+
+translation:
+x = 0.50 m
+y = 0.00 m
+z = 0.80 m
+
+rotation:
+roll  = 0
+pitch = 0
+yaw   = 0
+```
+
+These are demonstration values for the Phase 05 TF workflow.
+
+They are not a real camera-to-robot calibration.
+
+A real physical setup requires measured/calibrated extrinsic parameters.
+
+---
+
+# 12. Example 04 - Complete Five-Terminal Setup
+
+This is the complete working terminal configuration used for the final Phase 05 example.
+
+## Terminal 1 - Start ZED 2
 
 ```bash
-source /opt/ros/jazzy/setup.bash
-
-export ROS_DOMAIN_ID=30
-export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
-
-ros2 run tf2_ros static_transform_publisher \
-  --x 0.50 \
-  --y 0.00 \
-  --z 0.80 \
-  --roll 0.0 \
-  --pitch 0.0 \
-  --yaw 0.0 \
-  --frame-id robot_base \
-  --child-frame-id map
-```
-
-The values:
-
-```text
-X = 0.50 m
-Y = 0.00 m
-Z = 0.80 m
-```
-
-are experimental values only.
-
-They are not yet a calibrated camera-to-robot extrinsic transformation.
-
-For a real robot setup, this transformation must be determined from the actual physical camera mounting or through calibration.
-
----
-
-# 16. Successful TF2 Transformation
-
-After connecting `robot_base` to the existing ZED TF hierarchy, TF2 successfully calculated the complete transformation.
-
-Example observed during the experiment:
-
-```text
-robot_base → zed_left_camera_frame
-
-Translation:
-X ≈ 0.370 m
-Y ≈ -0.153 m
-Z ≈ 0.711 m
-```
-
-The values changed slightly over time because ZED positional tracking was active.
-
----
-
-# 17. Successful Object Transformation
-
-The Phase 05 node successfully transformed detected objects from the ZED camera frame into `robot_base`.
-
-Example:
-
-```text
-Laptop
-
-camera:
-(0.227, -0.173, -0.059) m
-
-robot_base:
-(0.607, -0.310, 0.640) m
-```
-
-Another detected object:
-
-```text
-Person
-
-camera:
-(0.460, 0.380, -0.010) m
-
-robot_base:
-(0.807, 0.253, 0.717) m
-```
-
-The complete transformation is therefore:
-
-```text
-Detected Object
-      ↓
-3D Camera Coordinates
-      ↓
-TF2
-      ↓
-Robot Base Coordinates
-```
-
----
-
-# 18. Complete Phase 05 Architecture
-
-The completed Phase 05 architecture is:
-
-```text
-                         ZED 2
-                           │
-                           ▼
-                       RGB Image
-                           │
-                           ▼
-                  ZED Object Detection
-                           │
-                           ▼
-                    2D Bounding Box
-                           │
-                           ▼
-                 Stereo Depth / 3D Data
-                           │
-                           ▼
-                  3D Object Position
-                           │
-                           ▼
-               zed_left_camera_frame
-                           │
-                           ▼
-                          TF2
-                           │
-                           ▼
-                         map
-                           │
-                           ▼
-                      robot_base
-                           │
-                           ▼
-             Robot-relative Object Position
-```
-
----
-
-# 19. ROS 2 Interfaces Used
-
-## Object Detection Topic
-
-```text
-/zed/zed_node/obj_det/objects
-```
-
-Message type:
-
-```text
-zed_msgs/msg/ObjectsStamped
-```
-
-## Object Detection Service
-
-```text
-/zed/zed_node/enable_obj_det
-```
-
-Service type:
-
-```text
-std_srvs/srv/SetBool
-```
-
-## TF Topics
-
-```text
-/tf
-/tf_static
-```
-
----
-
-# 20. ROS 2 Package Files
-
-The Python package contains:
-
-```text
-step01_pixel_to_3d.py
-step02_object_to_3d.py
-step03_zed_object_detection.py
-step04_object_to_robot_frame.py
-```
-
-The corresponding ROS 2 console scripts are:
-
-```text
-pixel_to_3d
-object_to_3d
-zed_object_detection
-object_to_robot_frame
-```
-
----
-
-# 21. Build Phase 05
-
-Build the package with:
-
-```bash
-cd ~/projects/robotics/ros2_perception_imitation_learning/phase_05_ai_object_detection/ros2_ws
+cd ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws
 
 source /opt/ros/jazzy/setup.bash
-source ~/projects/robotics/ros2_perception_imitation_learning/phase_01_camera_ros2/zed2/ros2_ws/install/setup.bash
+source install/setup.bash
 
 export ROS_DOMAIN_ID=30
 export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 export PYTHONNOUSERSITE=1
 
-colcon build \
-  --symlink-install \
-  --packages-select zed2_object_localization
-
-source install/setup.bash
+ros2 launch zed_wrapper zed_camera.launch.py \
+  camera_model:=zed2
 ```
+
+Leave Terminal 1 running.
 
 ---
 
-# 22. Run Object Detection
-
-With the ZED ROS 2 node already running:
+## Terminal 2 - Enable ZED AI Object Detection
 
 ```bash
 cd ~/projects/robotics/ros2_perception_imitation_learning/phase_05_ai_object_detection/ros2_ws
@@ -832,11 +673,28 @@ ros2 service call \
   "{data: true}"
 ```
 
+Example response:
+
+```text
+response:
+std_srvs.srv.SetBool_Response(
+    success=True,
+    message='Object Detection started'
+)
+```
+
+If already running:
+
+```text
+success=False
+message='Object Detection is already running'
+```
+
 ---
 
-# 23. Run Robot Frame Connection
+## Terminal 3 - Connect Robot Base to ZED TF Tree
 
-In a separate terminal:
+Publish the temporary Phase 05 transform:
 
 ```bash
 source /opt/ros/jazzy/setup.bash
@@ -855,13 +713,56 @@ ros2 run tf2_ros static_transform_publisher \
   --child-frame-id map
 ```
 
-This terminal must remain running while the experimental transform is required.
+Leave Terminal 3 running.
+
+Expected output:
+
+```text
+Spinning until stopped - publishing transform
+
+translation:
+('0.500000', '0.000000', '0.800000')
+
+rotation:
+('0.000000', '0.000000', '0.000000', '1.000000')
+
+from 'robot_base' to 'map'
+```
 
 ---
 
-# 24. Run Object-to-Robot Transformation
+## Terminal 4 - Verify TF Chain
 
-In another terminal:
+```bash
+source /opt/ros/jazzy/setup.bash
+
+export ROS_DOMAIN_ID=30
+export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+
+ros2 run tf2_ros tf2_echo \
+  robot_base \
+  zed_left_camera_frame
+```
+
+Once all TF publishers have been discovered, a valid transform must be displayed.
+
+The important condition is:
+
+```text
+robot_base
+    ↓
+map
+    ↓
+ZED TF tree
+    ↓
+zed_left_camera_frame
+```
+
+Terminal 4 is useful for verifying that the complete coordinate system is connected before running the localization node.
+
+---
+
+## Terminal 5 - Transform AI Objects into Robot Base Frame
 
 ```bash
 cd ~/projects/robotics/ros2_perception_imitation_learning/phase_05_ai_object_detection/ros2_ws
@@ -877,110 +778,258 @@ export PYTHONNOUSERSITE=1
 ros2 run zed2_object_localization object_to_robot_frame
 ```
 
-Expected output:
+At startup it reports:
 
 ```text
 Object localization: zed_left_camera_frame -> robot_base
+```
 
-Laptop | camera=(...) m | robot_base=(...) m
-Person | camera=(...) m | robot_base=(...) m
+Immediately after startup, TF2 may briefly report that `robot_base` is not yet available while ROS 2 discovers the transient-local TF publishers.
+
+Once the complete TF tree is available, object transformations start automatically.
+
+---
+
+# 13. Final Result
+
+The final experiment successfully detected a laptop and a person.
+
+Example laptop:
+
+```text
+Laptop
+
+Camera frame:
+x =  0.227 m
+y = -0.173 m
+z = -0.059 m
+
+Robot base frame:
+x =  0.607 m
+y = -0.310 m
+z =  0.640 m
+```
+
+Example person:
+
+```text
+Person
+
+Camera frame:
+x = 0.460 m
+y = 0.380 m
+z = -0.010 m
+
+Robot base frame:
+x = 0.807 m
+y = 0.253 m
+z = 0.717 m
+```
+
+The node therefore performs:
+
+```text
+ZED AI Detection
+        ↓
+Object Class
+        ↓
+3D Camera Coordinate
+        ↓
+TF2 Transformation
+        ↓
+3D Robot Coordinate
 ```
 
 ---
 
-# 25. What We Learned
+# 14. Phase 05 Programs
 
-Phase 05 combines several important robotics perception concepts.
-
-## 2D Perception
+## Step 01
 
 ```text
-RGB Image
-→ Object Detection
-→ Bounding Box
+step01_pixel_to_3d.py
 ```
 
-## 3D Perception
+Purpose:
 
 ```text
-Bounding Box
-+
-Stereo Depth
-→ 3D Object Position
+Pixel + Depth + Intrinsics
+          ↓
+         XYZ
 ```
 
-## Coordinate Transformation
-
-```text
-Camera Coordinates
-→ TF2
-→ Robot Coordinates
-```
-
-## Complete Robotics Perception Chain
-
-```text
-Camera
-→ Perception
-→ Object Detection
-→ 3D Position
-→ Coordinate Transformation
-→ Robot Frame
-```
-
-A robot cannot use only the pixel position of an object.
-
-For manipulation it needs to determine:
-
-```text
-What is the object?
-
-Where is the object in 3D?
-
-Where is the object relative to the robot?
-```
-
-Phase 05 demonstrates all three steps.
+This establishes the mathematical foundation of 3D perception.
 
 ---
 
-# 26. Phase 05 Status
-
-Completed:
-
-- [x] Pixel to 3D
-- [x] Pixel + depth → XYZ
-- [x] Object detection
-- [x] Native ZED object detection
-- [x] ZED object detection ROS 2 messages
-- [x] 2D bounding boxes
-- [x] 3D bounding boxes
-- [x] Object confidence
-- [x] Object 3D position
-- [x] Native ZED detection visualization
-- [x] ZED TF tree analysis
-- [x] Camera-frame coordinates
-- [x] TF2 coordinate transformation
-- [x] Robot-base coordinates
-- [x] Complete object localization pipeline
-
-Phase 05 therefore establishes:
+## Step 02
 
 ```text
-Object Detection
-+
-3D Perception
-+
+step02_object_to_3d.py
+```
+
+Purpose:
+
+```text
+Classical Object Detection
+          ↓
+Bounding Box Center
+          ↓
+Depth
+          ↓
+3D Object Position
+```
+
+This connects object detection with depth perception.
+
+---
+
+## Step 03
+
+```text
+step03_zed_object_detection.py
+```
+
+Purpose:
+
+```text
+ZED AI Object Detection
+          ↓
+ObjectsStamped
+          ↓
+AI Object Class
+          ↓
+3D Position
+```
+
+This replaces the simple detector with the native ZED AI perception pipeline.
+
+---
+
+## Step 04
+
+```text
+step04_object_to_robot_frame.py
+```
+
+Purpose:
+
+```text
+ZED Object Position
+        ↓
+zed_left_camera_frame
+        ↓
 TF2
-=
-Robot-relative 3D Object Localization
+        ↓
+robot_base
+```
+
+This converts perception information into coordinates that can later be used by a robot.
+
+---
+
+# 15. What We Learned
+
+Phase 05 connects several important robotics concepts:
+
+```text
+Computer Vision
+     +
+Depth Perception
+     +
+AI Object Detection
+     +
+Coordinate Frames
+     +
+TF2
+     =
+3D Object Localization
+```
+
+The progression was:
+
+```text
+Step 01
+Pixel
+ ↓
+XYZ
+
+Step 02
+Object
+ ↓
+Bounding Box
+ ↓
+XYZ
+
+Step 03
+AI Object Detection
+ ↓
+Object Class
+ ↓
+XYZ
+
+Step 04
+AI Object
+ ↓
+Camera XYZ
+ ↓
+TF2
+ ↓
+Robot XYZ
+```
+
+This is the transition from basic perception to robot-usable perception.
+
+---
+
+# 16. Important Distinction - Detection vs Localization
+
+Object Detection answers:
+
+```text
+What object is visible?
+Where is it in the image?
+```
+
+3D Object Localization answers:
+
+```text
+Where is the object physically located in 3D space?
+```
+
+Robot-frame localization answers:
+
+```text
+Where is the detected object relative to the robot?
+```
+
+Therefore Phase 05 covers both:
+
+```text
+AI Object Detection
++
+3D Object Localization
 ```
 
 ---
 
-# 27. Important Limitation
+# 17. Temporary TF vs Real Calibration
 
-The current transform between:
+The transform used in this phase:
+
+```text
+robot_base -> map
+
+x = 0.50
+y = 0.00
+z = 0.80
+```
+
+was intentionally used to demonstrate and validate the complete TF2 transformation pipeline.
+
+It is not a measured extrinsic calibration.
+
+For a real OpenMANIPULATOR-X setup, the actual physical relationship between:
 
 ```text
 robot_base
@@ -989,48 +1038,55 @@ robot_base
 and:
 
 ```text
-map
+ZED 2
 ```
 
-uses experimental values:
+must be determined by measurement or calibration.
+
+The final production pipeline will therefore become:
 
 ```text
-X = 0.50 m
-Y = 0.00 m
-Z = 0.80 m
-Roll  = 0.0
-Pitch = 0.0
-Yaw   = 0.0
+Physical Robot
+      ↓
+Real robot_base
+      ↓
+Calibrated Camera Transform
+      ↓
+ZED 2
+      ↓
+AI Detection
+      ↓
+3D Object Position
+      ↓
+TF2
+      ↓
+Object Position in Robot Coordinates
 ```
-
-These values demonstrate the TF2 pipeline but do not yet represent a physically calibrated camera-to-robot relationship.
-
-Before using the coordinates for real robot manipulation, the camera pose relative to the robot must be measured or calibrated.
 
 ---
 
-# 28. Next Phase
+# 18. Phase 05 Result
 
-The next project phase is:
-
-```text
-phase_06_segmentation
-```
-
-The perception pipeline will progress from:
+Phase 05 successfully demonstrated the complete progression:
 
 ```text
+2D Image
+   ↓
+Depth
+   ↓
+3D Point
+   ↓
 Object Detection
-↓
-Bounding Box
+   ↓
+AI Object Detection
+   ↓
+3D AI Object Position
+   ↓
+TF2
+   ↓
+Robot Base Coordinate
 ```
 
-toward:
+The final system can identify an object such as a laptop or person, obtain its 3D position from the ZED 2 and transform that position into the `robot_base` coordinate frame.
 
-```text
-Image Segmentation
-↓
-Pixel-level Object Mask
-```
-
-This provides more precise object geometry and prepares the perception system for later robot manipulation, dataset recording and imitation learning.
+This provides the perception foundation required for later robot manipulation and imitation-learning workflows.
